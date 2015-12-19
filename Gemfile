@@ -47,3 +47,4 @@ end
 
 # Adding bootstrap for views
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'simple_form'
