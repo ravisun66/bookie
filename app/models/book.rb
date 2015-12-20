@@ -14,7 +14,7 @@ extend FriendlyId
 	message: "Only images allowed"
 
 	validates_attachment_content_type :resource,
-	content_type: ['application/pdf'],
+	content_type: ['application/pdf', 'application/zip'],
 	message: "Only pdfs allowed"
 
 	validates :image, attachment_presence: true
