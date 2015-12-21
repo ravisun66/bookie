@@ -16,14 +16,17 @@ class PagesController < ApplicationController
   	puts book.resource.url
   	puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
   	zip_file_download_path = "#{Rails.root.join('tmp')}/new.zip"
-  	zip_file_uncompressed_path = "#{Rails.root.join('tmp')}/books_folder"
+  	@zip_file_uncompressed_path = "#{Rails.root.join('tmp')}/books_folder"
 	download = open(book.resource.url)
 	IO.copy_stream(download, zip_file_download_path)
-  	
+  	@pdf_files = []
   	@zip_filenames = Zip::File.open(zip_file_download_path) do |zip_file|
   		
   		zip_file.each do |file|
-    		zip_file.extract(file, "#{zip_file_uncompressed_path}/#{file.name}") unless File.exists?("#{zip_file_uncompressed_path}/#{file.name}")
+    		zip_file.extract(file, "#{@zip_file_uncompressed_path}/#{file.name}") unless File.exists?("#{@zip_file_uncompressed_path}/#{file.name}")
+			if file.name.include? ".mp4"
+				@pdf_files << file.name
+			end
 		end
   		zip_file.map { |entry| entry.name } 
   		
