@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   root 'pages#home'
   get 'dashboard' => 'pages#dashboard'
-    post '/buy/:slug', to: 'transactions#create', as: :buy
+  post '/buy/:slug', to: 'transactions#create', as: :buy
   get '/pickup/:guid', to: 'transactions#pickup', as: :pickup
-  get '/perform/:detail', to: 'pages#perform', as: :perform
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -60,4 +60,7 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  get '/perform/:detail', to: 'pages#perform', as: :perform
+  get '/view_video/:content', to: 'pages#view_video', as: :view_video
+  get '/view_pdf/:content', to: 'pages#view_pdf', as: :view_pdf
 end
