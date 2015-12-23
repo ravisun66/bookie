@@ -1,3 +1,20 @@
-<object type="application/pdf" data="<%="http://localhost:3000/videos/#{@content_path}.pdf"%>" width="800" height="800"></object>
+<!DOCTYPE html>
 
-<% FileUtils.remove_dir "#{Rails.public_path}/videos/#{@content_path}", true %>
+<head>
+
+<script type='text/javascript'>//<![CDATA[ 
+
+
+ $(document).ready(function () {
+            document.oncontextmenu = document.body.oncontextmenu = function () { return false; }
+        });
+
+ 
+</script>
+</head>
+
+<body>
+
+<embed src="<%="http://localhost:3000/videos/#{@content_path}"%>.pdf#toolbar=0&navpanes=0&scrollbar=0" width="800" height="800">
+
+</body>
