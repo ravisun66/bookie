@@ -1,13 +1,13 @@
 <% if @pdf_files.size > 0 %>
 	<% @pdf_files.each do |pdf_file| %>
-	<% @pdf_file_path = "#{@zip_file_uncompressed_path}/#{pdf_file}" %>
+	<% @pdf_file_path = "#{@file_path}/#{pdf_file.split('.').first}" %>
 	<%= link_to "#{pdf_file}", view_pdf_path(:content => @pdf_file_path) %>
 	<% end %>
 <% end %>
 
 <% if @video_files.size > 0 %>
 	<% @video_files.each  do |video_file| %>
-		<% @video_file_path = "#{@zip_file_uncompressed_path}/#{video_file}" %>
+		<% @video_file_path = "#{@file_path}/#{video_file}" %>
 		<%= link_to "#{video_file}", view_video_path(:content => @video_file_path) %> <br /> <br />
 		<% end %>
 <% end %>

@@ -20,13 +20,14 @@ class PagesController < ApplicationController
     if !(File.file?(zip_file_download_path))
 	     download = open(book.resource.url)
 	     IO.copy_stream(download, zip_file_download_path)
+       
     end
 
   	@pdf_files = []
     @video_files = []
   	
     if File.directory?(@zip_file_uncompressed_path)
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
       Dir.foreach(@zip_file_uncompressed_path) do |f_name|
         if File.directory?("#{@zip_file_uncompressed_path}/#{f_name}") && !(f_name.include? ".")
           
@@ -34,10 +35,10 @@ class PagesController < ApplicationController
             if file_name.length > 2
               
                 if file_name.include? ".pdf"
-                  @pdf_files << file_name
+                  @pdf_files << "#{f_name}/#{file_name}"
                 end
                 if file_name.include? ".mp4"
-                  @video_files << file_name
+                  @video_files << "#{f_name}/#{file_name}"
                 end
 
           end
@@ -64,21 +65,23 @@ class PagesController < ApplicationController
 
     end
 
-
-    #FileUtils.cp_r "#{@zip_file_uncompressed_path}", "#{Rails.public_path}/media/#{params[:detail]}"
-
+    if !File.directory?("#{Rails.public_path}/videos/media/#{params[:detail]}")
+    FileUtils.mkdir_p("#{Rails.public_path}/videos/media")
+    FileUtils.cp_r "#{@zip_file_uncompressed_path}", "#{Rails.public_path}/videos/media/#{params[:detail]}"
+    end
+     @file_path = "media#{@zip_file_uncompressed_path.split("tmp").last}"
+ 
   end
   
 
   def view_video
 
     @content_path = params[:content]
-    #send_file ("#{@content_path}.mp4"), :type => 'video/mp4',:disposition => :inline, :stream => true 
 
   end
 
   def view_pdf
-    p ">>>>>>>>>>>here>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
     @content_path = params[:content]
     #send_file ("#{@content_path}.pdf"), :type => 'application/pdf',:disposition => :inline, :stream => true 
 
